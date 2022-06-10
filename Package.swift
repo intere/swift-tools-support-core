@@ -1,4 +1,4 @@
-// swift-tools-version:5.4
+// swift-tools-version:5.6
 
 /*
  This source file is part of the Swift.org open source project
@@ -73,6 +73,21 @@ let package = Package(
             name: "TSCUtility",
             dependencies: ["TSCBasic", "TSCclibc"],
             exclude: CMakeFiles),
+
+        .plugin(
+            name: "GenerateContributors",
+            capability: .command(
+                intent: .custom(
+                    verb: "regenerate-contributors-list",
+                    description: "Generates the CONTRIBUTORS.txt file based on Git logs"
+                ),
+                permissions: [
+                    .writeToPackageDirectory(
+                        reason: "This command writes the new CONTRIBUTORS.txt to the source root."
+                    )
+                ]
+            )
+        ),
 
         // MARK: Additional Test Dependencies
 
